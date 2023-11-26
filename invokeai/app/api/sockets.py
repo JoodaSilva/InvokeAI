@@ -7,7 +7,6 @@ from fastapi_socketio import SocketManager
 
 from ..services.events import EventServiceBase
 
-
 class SocketIO:
     __sio: SocketManager
 
@@ -27,10 +26,8 @@ class SocketIO:
 
     async def _handle_sub(self, sid, data, *args, **kwargs):
         if "session" in data:
-            self.__sio.enter_room(sid, data["session"])
-
-        # @app.sio.on('unsubscribe')
+            await self.__sio.enter_room(sid, data["session"])
 
     async def _handle_unsub(self, sid, data, *args, **kwargs):
         if "session" in data:
-            self.__sio.leave_room(sid, data["session"])
+            await self.__sio.leave_room(sid, data["session"])
